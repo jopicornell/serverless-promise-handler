@@ -1,6 +1,6 @@
 {
   "name": "promise-handler",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Promise handler for serverless",
   "main": "dist/index.js",
   "author": "Joan Picornell",
@@ -16,7 +16,7 @@
     "webpack": "^3.5.4"
   },
   "scripts": {
-    "build-babel": "babel lib --presets babel-preset-es2015 --out-file dist/index.js",
+    "build-babel": "babel lib --presets babel-preset-env --out-file dist/index.js",
     "build": "node webpack.js"
   },
   "dependencies": {

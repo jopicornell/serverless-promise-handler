@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("http"), require("easy-slack"), require("errors"), require("uuid"));
-	else if(typeof define === 'function' && define.amd)
-		define("serverless-promise", ["http", "easy-slack", "errors", "uuid"], factory);
-	else if(typeof exports === 'object')
-		exports["serverless-promise"] = factory(require("http"), require("easy-slack"), require("errors"), require("uuid"));
-	else
-		root["serverless-promise"] = factory(root["http"], root["easy-slack"], root["errors"], root["uuid"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_6__) {
-return /******/ (function(modules) { // webpackBootstrap
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -93,7 +84,7 @@ module.exports = handler;
 
 var http = __webpack_require__(2);
 var errorHandler = __webpack_require__(3);
-var helpers = __webpack_require__(7);
+var helpers = __webpack_require__(6);
 
 module.exports = function (promise, options) {
   return function (event, context, callback) {
@@ -150,10 +141,10 @@ module.exports = function (promise, options) {
           headers: response.headers
         });
       }).catch(function (error) {
-        return errorHandler.handle(error, response, context, callback);
+        return errorHandler(error, response, context, callback);
       });
     }).catch(function (error) {
-      return errorHandler.handle(error, response, context, callback);
+      return errorHandler(error, response, context, callback);
     });
   };
 };
@@ -162,7 +153,7 @@ module.exports = function (promise, options) {
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+module.exports = require("http");
 
 /***/ }),
 /* 3 */
@@ -172,17 +163,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 
 var slack = __webpack_require__(4);
-var errors = __webpack_require__(5);
-var uuid = __webpack_require__(6);
+var uuid = __webpack_require__(5);
 
-errors.create({
-  name: 'ApplicationError',
-  body: {},
-  type: 'ApplicationError',
-  code: 1
-});
-
-module.exports.handle = function (error, response, context, callback) {
+module.exports = function (error, response, context, callback) {
   if (!error) {
     // bot.postMessageToChannel('errors', 'unknown error');
     callback(new Error('unknown error'));
@@ -221,19 +204,27 @@ module.exports.handle = function (error, response, context, callback) {
 
   slackError.then(function () {
     return error.stack && slack.createSnippet('errors', 'Stack error', error.stack);
-  }).then(function (res) {
-    return console.log(res);
-  }).catch(function (err) {
-    console.error(err);
-  }).finally(function () {
-    callback(null, {
+  }).then(function () {
+    return callback(null, {
       statusCode: response.statusCode || 500,
       headers: response.headers,
-      body: error.toJSON ? JSON.stringify(error.toJSON()) : JSON.stringify({
+      body: error.toJSON ? error.toJSON() : JSON.stringify({
         message: error.message,
         code: error.code,
         stack: error.stack,
         uuid: error.uuid
+      })
+    });
+  }).catch(function (err) {
+    return callback(null, {
+      statusCode: response.statusCode || 500,
+      headers: response.headers,
+      body: error.toJSON ? error.toJSON() : JSON.stringify({
+        message: error.message,
+        code: error.code,
+        stack: error.stack,
+        uuid: error.uuid,
+        slackError: err
       })
     });
   });
@@ -243,22 +234,16 @@ module.exports.handle = function (error, response, context, callback) {
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
+module.exports = require("easy-slack");
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+module.exports = require("uuid");
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -288,4 +273,3 @@ module.exports = {
 
 /***/ })
 /******/ ]);
-});

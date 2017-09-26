@@ -18,9 +18,7 @@ const webpackConfig = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'umd',
-    library: 'serverless-promise',
-    umdNamedDefine: true,
+    libraryTarget: 'commonjs2',
   },
   resolve: {
     modules: [path.resolve('./node_modules'), path.resolve('./src')],
