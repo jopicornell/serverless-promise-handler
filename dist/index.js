@@ -1,5 +1,14 @@
-module.exports =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("http"), require("easy-slack"), require("uuid"));
+	else if(typeof define === 'function' && define.amd)
+		define("promise-handler", ["http", "easy-slack", "uuid"], factory);
+	else if(typeof exports === 'object')
+		exports["promise-handler"] = factory(require("http"), require("easy-slack"), require("uuid"));
+	else
+		root["promise-handler"] = factory(root["http"], root["easy-slack"], root["uuid"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_5__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -153,7 +162,7 @@ module.exports = function (promise, options) {
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("http");
+module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ }),
 /* 3 */
@@ -234,13 +243,13 @@ module.exports = function (error, response, context, callback) {
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("easy-slack");
+module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = require("uuid");
+module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 
 /***/ }),
 /* 6 */
@@ -273,3 +282,5 @@ module.exports = {
 
 /***/ })
 /******/ ]);
+});
+//# sourceMappingURL=index.js.map

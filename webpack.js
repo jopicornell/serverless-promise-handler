@@ -1,4 +1,5 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 require('shelljs/global')
 var ora = require('ora')
 var webpack = require('webpack')
@@ -15,10 +16,14 @@ spinner.start()
 const webpackConfig = {
   entry: './lib/index.js',
   target: 'node',
+  devtool: 'source-map',
+  externals: [nodeExternals()],
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'commonjs2',
+    library: 'promise-handler',
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   resolve: {
     modules: [path.resolve('./node_modules'), path.resolve('./src')],
