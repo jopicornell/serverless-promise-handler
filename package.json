@@ -1,5 +1,5 @@
 {
-  "name": "serverless-promise",
+  "name": "promise-handler",
   "version": "1.0.1",
   "description": "Promise handler for serverless",
   "main": "dist/index.js",
