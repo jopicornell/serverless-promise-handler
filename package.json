@@ -1,6 +1,6 @@
 {
-  "name": "promise-handler",
-  "version": "1.0.6",
+  "name": "serverless-promise-handler",
+  "version": "1.0.1",
   "description": "Promise handler for serverless",
   "main": "dist/index.js",
   "author": "Joan Picornell",
@@ -22,7 +22,8 @@
     "build": "node webpack.js"
   },
   "dependencies": {
-    "easy-slack": "https://github.com/jpicornell/easy-slack",
+    "easy-slack": "^1.0.0",
     "uuid": "^3.1.0"
-  }
+  },
+  "repository": "https://github.com/jpicornell/serverless-promise-handler.git"
 }
